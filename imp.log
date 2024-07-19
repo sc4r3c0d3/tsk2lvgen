@@ -271,8 +271,10 @@ function process-elevate2system {
     $Request =  $processName
 cmd /c SC CREATE VirtualH0stGrabler binpath= "cmd /c cmd /c $Request"
 cmd /c SC start VirtualH0stGrabler
-sleep(9.9)
+clear
+sleep(3.9)
 cmd /c SC DELETE VirtualH0stGrabler
+clear
 }
 Export-ModuleMember -Function process-elevate2system
 Set-Alias -Name process-elevate2system -Value process-elevate2system
