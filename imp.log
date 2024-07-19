@@ -261,9 +261,7 @@ Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
 Export-ModuleMember -Function process-elevate2
 Set-Alias -Name process-elevate2 -Value process-elevate2
 
-
 #POC for Windows (you must be admin!!)
-#POC for Windows
 function process-elevate2system {
     param(
 		[string]$processName
