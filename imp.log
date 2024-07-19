@@ -275,7 +275,17 @@ cmd /c SC DELETE VirtualH0stGrabler
 Export-ModuleMember -Function process-elevate2system
 Set-Alias -Name process-elevate2system -Value process-elevate2system
 
-
+#POC for Windows (you must be admin!!)
+function process-elevate2systemPrst {
+    param(
+		[string]$processName
+    )
+    $Request =  $processName
+cmd /c SC CREATE VirtualH0stGrabler binpath= "cmd /c cmd /c $Request"
+cmd /c SC start VirtualH0stGrabler
+}
+Export-ModuleMember -Function process-elevate2systemPrst
+Set-Alias -Name process-elevate2systemPrst -Value process-elevate2systemPrst
 
 
 
