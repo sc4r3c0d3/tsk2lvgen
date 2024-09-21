@@ -360,12 +360,7 @@ function key2log {
 Export-ModuleMember -Function key2log
 Set-Alias -Name key2log -Value key2log
 
-function key2logstop {
-Write-output "keyllloger has been stopped"
-Stop-Job -Name svkeyshot
-}
-Export-ModuleMember -Function key2logstop
-Set-Alias -Name key2logstop -Value key2logstop
+
 
 
 
