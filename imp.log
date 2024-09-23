@@ -360,6 +360,13 @@ function key2log {
 Export-ModuleMember -Function key2log
 Set-Alias -Name key2log -Value key2log
 
+function killkey2log  {
+   Stop-Job -Name "svh0stkey"
+   #Remove-Job -Name "svh0stkey"
+}
+Export-ModuleMember -Function killkey2log
+Set-Alias -Name killkey2log -Value killkey2log 
+
 
 
 
