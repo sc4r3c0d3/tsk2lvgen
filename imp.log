@@ -314,7 +314,7 @@ getbrowserdata -ErrorAction SilentlyContinue
 Export-ModuleMember -Function getbrowserdata
 Set-Alias -Name getbrowserdata-Value getbrowserdata
 
-function getdllprocess {
+function getdll {
     param(
         [string]$processName
     )
@@ -359,8 +359,8 @@ function getdllprocess {
         }
     }
 }
-Export-ModuleMember -Function getdllprocess
-Set-Alias -Name getdllprocess -Value getdllprocess
+Export-ModuleMember -Function getdll
+Set-Alias -Name getdll -Value getdll
 
 
 
