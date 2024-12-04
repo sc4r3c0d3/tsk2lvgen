@@ -314,60 +314,7 @@ getbrowserdata -ErrorAction SilentlyContinue
 Export-ModuleMember -Function getbrowserdata
 Set-Alias -Name getbrowserdata-Value getbrowserdata
 
-function getdll {
-    param(
-        [string]$processName
-    )
-    $process = Get-Process -Name $processName -ErrorAction SilentlyContinue
-    if ($process -eq $null) {
-        Write-Host "Process: $processName -> not found"
-    } else {
-        $modules = $process.Modules
 
-        if ($modules.Count -gt 0) {
-            $vulnerableModules = @()
-
-            foreach ($module in $modules) {
-                $dllName = Split-Path $module.FileName -Leaf
-
-                if ($dllName -like "*.dll" -and $module.ModuleMemorySize -gt 0) {
-                    $result = "NotNameFound"
-                    $versionInfo = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($module.FileName)
-
-                    if ($versionInfo -ne $null -and $versionInfo.CompanyName -eq "Microsoft Corporation") {
-                        $sigCheckOutput = & certutil -hashfile $module.FileName MD5
-
-                        if ($sigCheckOutput -match "Microsoft") {
-                            $result = "Success"
-                        } elseif ($sigCheckOutput -match "BufferOverflow") {
-                            $result = "BufferOverflow"
-                        } elseif ($sigCheckOutput -match "FileLockedWithOnlyReaders") {
-                            $result = "FileLockedWithOnlyReaders"
-                        }
-                    }
-
-                    $vulnerableModules += [PSCustomObject]@{
-                        Name  = $dllName
-                        Path  = $module.FileName
-                        PID   = $process.Id
-                        Result= $result
-                    }
-                }
-            }
-
-            if ($vulnerableModules.Count -gt 0) {
-                Write-Host "Application $processName use those DLL files:"
-                $vulnerableModules | Format-Table -AutoSize
-            } else {
-                Write-Host "Application $processName not use vulners DLL files."
-            }
-        } else {
-            Write-Host "Application $processName not use DLL files."
-        }
-    }
-}
-Export-ModuleMember -Function getdll
-Set-Alias -Name getdll -Value getdll
 
 
 
