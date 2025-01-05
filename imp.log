@@ -334,10 +334,30 @@ Export-ModuleMember -Function process-hollowing
 Set-Alias -Name process-hollowing -Value process-hollowing
 
 function getprograms {
-$progs = (dir "c:\program files").Name
-$progs32 = (dir "c:\Program Files (x86)").Name
-$allprogs = @($progs,$progs32)
-$allprogs
+$registryPaths = @(
+        "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*",   # 64-bit software
+        "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"  # 32-bit software
+    )
+    $installedSoftware = @()
+    foreach ($path in $registryPaths) {
+        try {
+            $programs = Get-ChildItem -Path $path -ErrorAction SilentlyContinue
+            foreach ($program in $programs) {
+                # Pokud klíč obsahuje 'DisplayName', přidej ho do seznamu
+                if ($program.PSObject.Properties.Match("DisplayName")) {
+                    $installedSoftware += [PSCustomObject]@{
+                        DisplayName   = $program.DisplayName
+                        DisplayVersion = $program.DisplayVersion
+                        InstallDate    = $program.InstallDate
+                    }
+                }
+            }
+        }
+        catch {
+            Write-Warning "Chyba při čtení registru z cesty: $path"
+        }
+    }
+    $installedSoftware | Sort-Object DisplayName | Format-Table -AutoSize
 }
 Export-ModuleMember -Function getprograms
 Set-Alias -Name getprograms -Value getprograms
