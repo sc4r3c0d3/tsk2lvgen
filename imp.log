@@ -334,24 +334,26 @@ Export-ModuleMember -Function hollow
 Set-Alias -Name hollow -Value hollow
 
 function getprograms {
-$registryPaths = @(
-    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*",   # 64-bit software
-    "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"  # 32-bit software
-)
-$installedSoftware = foreach ($path in $registryPaths) {
-    Get-ItemProperty $path | Select-Object DisplayName, DisplayVersion, InstallDate
-}
-$installedSoftware | Where-Object { 
-    $_.DisplayName -ne $null -and 
-    $_.DisplayName -notmatch "update" -and
-    $_.DisplayName -notmatch "hotfix" -and
-    $_.DisplayName -notmatch "security" -and
-    $_.DisplayName -notmatch "KB"   # Klíčové slovo pro aktualizace (např. "KB123456")
-} | Sort-Object DisplayName | Format-Table -AutoSize
-
+    $registryPaths = @(
+        "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*",   # 64-bit software
+        "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"  # 32-bit software
+    )
+    $installedSoftware = foreach ($path in $registryPaths) {
+        # Získání informací o nainstalovaných programech, kontrola, zda vlastnosti existují
+        Get-ItemProperty $path -ErrorAction SilentlyContinue | Where-Object { 
+            $_.DisplayName -ne $null 
+        } | Select-Object DisplayName, DisplayVersion, InstallDate
+    }
+    $installedSoftware | Where-Object { 
+        $_.DisplayName -notmatch "update" -and
+        $_.DisplayName -notmatch "hotfix" -and
+        $_.DisplayName -notmatch "security" -and
+        $_.DisplayName -notmatch "KB"   # Klíčové slovo pro aktualizace (např. "KB123456")
+    } | Sort-Object DisplayName | Format-Table -AutoSize
 }
 Export-ModuleMember -Function getprograms
 Set-Alias -Name getprograms -Value getprograms
+
 
 
 
