@@ -209,15 +209,15 @@ Set-Alias -Name privileges-unlock -Value privileges-unlock
 # need admin !!
 function persistence-tskschld {
     param(
-		[string]$processName,
-		[string]$processTarget,
-		[string]$processUsername,
-		[string]$processPassword
+		[string]$Name,
+		[string]$Target,
+		[string]$Username,
+		[string]$Password
     )
-    $Request =  $processName
-    $tname =  $processTarget
-    $user = $processUsername
-    $pass = $processPassword
+    $Request =  $Target
+    $tname =  $Name
+    $user = $Username
+    $pass = $Password
 
 $action = New-ScheduledTaskAction -Execute "$Request"
 $trigger = New-ScheduledTaskTrigger -AtStartup
