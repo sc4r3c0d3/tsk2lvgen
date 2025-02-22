@@ -455,12 +455,12 @@ function popevilbox {
     param(
         [string]$Text,
         [string]$Header,
-        [string]$Button,
+        [string]$Number,
         [string]$Thing
     )
     $Request = $Text
     $Hpoint =  $Header
-    $Buttons = [System.Windows.Forms.MessageBoxButtons]::YesNo
+    $Buttons = $Number
     $What = $Thing
     [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
     $OUTPUT = [System.Windows.Forms.MessageBox]::Show("$Request", "$Hpoint", "$Buttons")
