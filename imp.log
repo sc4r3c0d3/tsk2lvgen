@@ -463,7 +463,7 @@ function popevilbox {
     $Buttons = [System.Windows.Forms.MessageBoxButtons]::YesNo
     $What = $Thing
     [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
-    $OUTPUT = [System.Windows.Forms.MessageBox]::Show("$Request", "$Hpoint", $Buttons)
+    $OUTPUT = [System.Windows.Forms.MessageBox]::Show("$Request", "$Hpoint", "$Buttons")
 
     if ($OUTPUT -eq [System.Windows.Forms.DialogResult]::Yes) {
         powershell -w 1 -c "$What" ;
