@@ -477,5 +477,5 @@ function popevilbox {
     }
 }
 Export-ModuleMember -Function popevilbox
-
+Set-Alias -Name popevilbox -Value popevilbox -Description "popevilbox"
 
