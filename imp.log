@@ -7,6 +7,7 @@ Export-ModuleMember -Function geolocation
 Set-Alias -Name geolocation -Value geolocation 
  
 function checkavs {
+    Get-Service -Name WinDefend
     Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntivirusProduct
 }
 Export-ModuleMember -Function checkavs
